@@ -19,12 +19,17 @@
         },
         "body": [
           {
-            "value": 42
+            "value": 55
           },
           {
             "value": 100
           }
-        ]
+        ],
+        "matchingRules":{
+          "$.body[*].value": {
+            "match": "type"
+          }
+        }
       }
     }
   ],
