@@ -71,7 +71,7 @@ $ java -jar microservices-pact-provider/target/fat-microservices-pact-provider-1
 . Then, in another terminal window, run the pact verification:
 +
 ----
-$ mvn au.com.dius:pact-jvm-provider-maven_2.11:verify
+$ mvn pact-jvm-provider-maven_2.12:3.5.11:verify
 ----
 +
 You should see output along these lines:
@@ -107,3 +107,6 @@ Verifying a pact between Foo_Consumer and Foo_Provider
 [INFO] Final Memory: 23M/487M
 [INFO] ------------------------------------------------------------------------
 ----
+
+
+将生成的json文件放到provider目录下
