@@ -1,3 +1,9 @@
+1,fork前的原项目没有加上pact-jvm-provider-maven_2.12的maven插件,导致provider项目运行
+----
+$ mvn pact-jvm-provider-maven_2.12:3.5.11:verify
+----
+时会出错
+
 = Spring Boot Microservices + Maven + Pact-JVM
 
 This is a Maven-based port of the Gradle-based example (https://github.com/mstine/microservices-pact by Matt Stine <mstine@pivotal.io>).
