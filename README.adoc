@@ -1,8 +1,4 @@
-1,fork前的原项目没有加上pact-jvm-provider-maven_2.12的maven插件,导致provider项目运行
-----
-$ mvn pact-jvm-provider-maven_2.12:3.5.11:verify
-----
-时会出错
+1 ,put the json file to microservices-pact-provider/src/contract
 
 = Spring Boot Microservices + Maven + Pact-JVM
 
