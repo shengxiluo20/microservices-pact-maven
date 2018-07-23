@@ -35,11 +35,6 @@
             <artifactId>pact-jvm-consumer-junit_2.11</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>au.com.dius</groupId>
-            <artifactId>pact-jvm-model</artifactId>
-            <version>3.5.11</version>
-        </dependency>
 
         <dependency>
             <groupId>com.alibaba</groupId>
