@@ -74,5 +74,12 @@ public class PactJunitRuleMultipleInteractionsTest {
 
         providerHandler.setBackendURL(mockProvider.getUrl(), "Nanoha");
         information = providerHandler.getInformation();
+
+
+        /*List<RequestResponseInteraction> interactions = pacts.getInteractions();
+
+        for (RequestResponseInteraction interaction : interactions) {
+            providerHandler.getInformation(interaction.getRequest());
+        }*/
     }
 }
