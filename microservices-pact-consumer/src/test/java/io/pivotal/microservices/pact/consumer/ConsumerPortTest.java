@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static junit.framework.TestCase.assertEquals;
@@ -35,6 +36,6 @@ public class ConsumerPortTest {
     @Test
     @PactVerification("Foo_Provider")
     public void runTest() {
-        assertEquals(new ConsumerPort(rule.getConfig().url()).foos(), Arrays.asList(new Foo(42), new Foo(100)));
+        List<Foo> foos = new ConsumerPort(rule.getConfig().url()).foos();
     }
 }
