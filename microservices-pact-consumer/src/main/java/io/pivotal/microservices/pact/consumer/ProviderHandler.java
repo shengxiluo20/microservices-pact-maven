@@ -21,7 +21,7 @@ public class ProviderHandler {
     }
 
 
-    public void getInformation(String path, Object body, String method, Map<String, List<String>> query) {
+    public void getInformation(String path, String body, String method, Map<String, List<String>> query) {
 
         RestTemplate restTemplate = new RestTemplate();
         ParameterizedTypeReference<String> responseType = new ParameterizedTypeReference<String>() {
@@ -39,7 +39,9 @@ public class ProviderHandler {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.parseMediaType("application/json; charset=UTF-8"));
         headers.add("Accept", MediaType.APPLICATION_JSON.toString());
-        HttpEntity<String> entity = new HttpEntity<>(JSONObject.toJSONString(body), headers);
+
+        HttpEntity<String> entity = new HttpEntity<>(body, headers);
+
 
         ResponseEntity<String> exchange = restTemplate.exchange(backendURL + "/" + path+ mapToQueryString(map), HttpMethod.resolve(method), entity, responseType, map);
         System.out.println("===================" + exchange.getBody());

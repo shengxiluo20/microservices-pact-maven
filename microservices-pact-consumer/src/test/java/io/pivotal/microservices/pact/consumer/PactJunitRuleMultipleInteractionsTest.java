@@ -30,22 +30,15 @@ public class PactJunitRuleMultipleInteractionsTest {
 
         PactDslResponse body = builder
                 .given("")
-                .uponReceiving("Miku")
-                .path("/information")
-                .query("name=Miku")
-                .method("GET")
+                .uponReceiving("post")
+                .path("/hello")
+                .query("")
+                .method("POST")
+                .body("{\"name\": \"harry\"}")
                 .willRespondWith()
                 .headers(headers)
                 .status(200)
-                .body("{\n" +
-                        "    \"salary\": 45000,\n" +
-                        "    \"name\": \"Hatsune Miku\",\n" +
-                        "    \"nationality\": \"Japan\",\n" +
-                        "    \"contact\": {\n" +
-                        "        \"Email\": \"hatsune.miku@ariman.com\",\n" +
-                        "        \"Phone Number\": \"9090950\"\n" +
-                        "    }\n" +
-                        "}");
+                .body("{\"hello\": \"harry\"}");
 
         body = body.given("")
                 .uponReceiving("Nanoha")
@@ -66,6 +59,7 @@ public class PactJunitRuleMultipleInteractionsTest {
                         "}");
 
 
+
         RequestResponsePact pact = body.toPact();
         this.pact = pact;
         return pact;
@@ -78,7 +72,7 @@ public class PactJunitRuleMultipleInteractionsTest {
         List<RequestResponseInteraction> interactions = pact.getInteractions();
         for (RequestResponseInteraction interaction : interactions) {
             Request request = interaction.getRequest();
-            providerHandler.getInformation(request.getPath(),request.getBody(),request.getMethod(),request.getQuery());
+            providerHandler.getInformation(request.getPath(),request.getBody().getValue(),request.getMethod(),request.getQuery());
         }
     }
 }
