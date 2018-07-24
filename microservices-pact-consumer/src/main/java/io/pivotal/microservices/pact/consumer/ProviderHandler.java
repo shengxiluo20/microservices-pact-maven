@@ -36,14 +36,31 @@ public class ProviderHandler {
             }
         }
 
-
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.parseMediaType("application/json; charset=UTF-8"));
         headers.add("Accept", MediaType.APPLICATION_JSON.toString());
         HttpEntity<String> entity = new HttpEntity<>(JSONObject.toJSONString(body), headers);
 
-        //TODO chi
-        ResponseEntity<String> exchange = restTemplate.exchange(backendURL + "/" + path+"?name="+map.get("name"), HttpMethod.resolve(method), entity, responseType, map);
+        ResponseEntity<String> exchange = restTemplate.exchange(backendURL + "/" + path+ mapToQueryString(map), HttpMethod.resolve(method), entity, responseType, map);
         System.out.println("===================" + exchange.getBody());
     }
+
+
+    private String mapToQueryString(Map<String, String> map) {
+        StringBuilder string = new StringBuilder();
+
+        if(map.size() > 0) {
+            string.append("?");
+        }
+
+        for(Map.Entry<String, String> entry : map.entrySet()) {
+            string.append(entry.getKey());
+            string.append("=");
+            string.append(entry.getValue());
+            string.append("&");
+        }
+
+        return string.toString();
+    }
+
 }

@@ -3,6 +3,8 @@ package io.pivotal.microservices.pact.consumer;
 import au.com.dius.pact.consumer.Pact;
 import au.com.dius.pact.consumer.PactProviderRuleMk2;
 import au.com.dius.pact.consumer.PactVerification;
+import au.com.dius.pact.consumer.dsl.PactDslRequestWithoutPath;
+import au.com.dius.pact.consumer.dsl.PactDslResponse;
 import au.com.dius.pact.consumer.dsl.PactDslWithProvider;
 import au.com.dius.pact.model.Request;
 import au.com.dius.pact.model.RequestResponseInteraction;
@@ -23,10 +25,10 @@ public class PactJunitRuleMultipleInteractionsTest {
 
     @Pact(provider="Foo_Provider", consumer="Foo_Consumer")
     public RequestResponsePact createPact(PactDslWithProvider builder) {
-        Map<String, String> headers = new HashMap<String, String>();
+        Map<String, String> headers = new HashMap();
         headers.put("Content-Type", "application/json;charset=UTF-8");
 
-        RequestResponsePact pact = builder
+        PactDslResponse body = builder
                 .given("")
                 .uponReceiving("Miku")
                 .path("/information")
@@ -43,8 +45,9 @@ public class PactJunitRuleMultipleInteractionsTest {
                         "        \"Email\": \"hatsune.miku@ariman.com\",\n" +
                         "        \"Phone Number\": \"9090950\"\n" +
                         "    }\n" +
-                        "}")
-                .given("")
+                        "}");
+
+        body = body.given("")
                 .uponReceiving("Nanoha")
                 .path("/information")
                 .query("name=Nanoha")
@@ -60,11 +63,11 @@ public class PactJunitRuleMultipleInteractionsTest {
                         "        \"Email\": \"takamachi.nanoha@ariman.com\",\n" +
                         "        \"Phone Number\": \"9090940\"\n" +
                         "    }\n" +
-                        "}")
-                .toPact();
+                        "}");
 
+
+        RequestResponsePact pact = body.toPact();
         this.pact = pact;
-
         return pact;
     }
 
@@ -72,9 +75,7 @@ public class PactJunitRuleMultipleInteractionsTest {
     @PactVerification("Foo_Provider")
     public void runTest() {
         ProviderHandler providerHandler = new ProviderHandler(mockProvider.getUrl());
-
         List<RequestResponseInteraction> interactions = pact.getInteractions();
-
         for (RequestResponseInteraction interaction : interactions) {
             Request request = interaction.getRequest();
             providerHandler.getInformation(request.getPath(),request.getBody(),request.getMethod(),request.getQuery());
